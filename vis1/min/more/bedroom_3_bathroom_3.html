@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_9901e8d182030d96fb046a0a889a43cc {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+</head>
+<body>
+    
+    
+        <h1 style="text-align: center; color: black; font-size: 36px; font-weight: bold; margin-top: 10px;">
+            Visualisasi Harga minimum Properti Rumah di Bandung
+        </h1>
+    
+    
+        <div style="
+            position: fixed;
+            bottom: 50px; left: 50px; width: 250px; height: auto;
+            background-color: white;
+            border:2px solid grey;
+            z-index:9999; font-size:14px;
+            padding: 10px;
+        ">
+            <b>Data Range:</b><br>
+            Banyaknya lokasi: 54/60<br>
+            Land: 40.00 m<sup>2</sup> - 758.00 m<sup>2</sup><br>
+            Price: 85 jt - 6.5 M<br>
+        </div>
+    
+    
+            <div class="folium-map" id="map_9901e8d182030d96fb046a0a889a43cc" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_9901e8d182030d96fb046a0a889a43cc = L.map(
+                "map_9901e8d182030d96fb046a0a889a43cc",
+                {
+                    center: [-6.905977, 107.613144],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_afe9a30a06835d96674d119b10b3a907 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_afe9a30a06835d96674d119b10b3a907.addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var heat_map_56f0f7187c9e1ddf31ce58e200865a48 = L.heatLayer(
+                [[-6.9061442500000005, 107.57133171215168, 0.8651597817614964], [-6.9387901, 107.60287028305659, 0.857365549493375], [-6.9178562, 107.65988138469118, 0.9088074824629774], [-6.92144665, 107.6770158552717, 0.8924395946999221], [-6.94029745, 107.57568267684286, 0.8651597817614964], [-6.9558976, 107.63089148116754, 0.5970381917381138], [-6.93193445, 107.555053271167, 0.9220576773187841], [-6.9051357499999995, 107.6166565844473, 0.9228371005455963], [-6.928054100000001, 107.6404417263918, 0.9197194076383476], [-6.93232645, 107.59074740446374, 0.9080280592361653], [-6.947036199999999, 107.59627135374859, 0.9158222915042868], [-6.965688005385914, 107.63789418156816, 0.8901013250194856], [-6.8863341, 107.62897980161543, 0.8308651597817615], [-6.89851205, 107.65007706308097, 0.9056897895557288], [-6.915058950000001, 107.72119143769423, 0.8807482462977396], [-6.9143518, 107.6024663, 0.8807482462977396], [-6.8627967, 107.60935594852518, 0.872954014029618], [-6.9283041, 107.69024507286085, 0.7872174590802806], [-6.880933349999999, 107.61392108064138, 0.8807482462977396], [-6.95283425, 107.69811481410812, 0.8737334372564303], [-6.9247499, 107.6462773, 0.911925175370226], [-6.9343483, 107.62621853326837, 1.0], [-6.8957284, 107.67119444335107, 0.9892439594699922], [-6.9535356, 107.67520978505222, 0.8963367108339828], [-6.939712849999999, 107.613796906891, 0.8885424785658612], [-6.8923, 107.5909, 0.8261886204208886], [-6.863, 107.5881, 0.9041309431021044], [-6.9143889000000005, 107.61702181771668, 0.5845674201091192], [-6.9053267, 107.710954740483, 0.91987529228371], [-6.999963, 107.620874, 0.8807482462977396], [-7.0481094, 107.5923258, 0.6547155105222136], [-6.9816369, 107.6365711, 0.8760717069368668], [-6.9815914, 107.8327237, 0.6703039750584567], [-6.9049243, 107.6941319, 0.8939984411535464], [-6.9411936, 107.7434564, 0.9392049883086516], [-7.0869685, 107.5627557, 0.8261886204208886], [-6.8799677, 107.6638481, 0.8760717069368668], [-7.0359615, 107.7125467, 0.857365549493375], [-7.1027234, 107.4641673, 0.8637568199532346], [-6.9862912, 107.626449, 0.8339828526890102], [-7.0099447, 107.5507035, 0.9742790335151987], [-7.1968665, 107.6708811, 0.7014809041309431], [-6.9309792, 107.5421506, 0.911925175370226], [-6.9716176, 107.584734, 0.9041309431021044], [-7.0660858, 107.7132262, 0.514419329696025], [-7.0888583, 107.4800032, 0.0], [-6.9648801, 107.7559578, 0.9290724863600935], [-7.0268685, 107.5167964, 0.8924395946999221], [-6.901, 107.501, 0.6562743569758379], [-6.7973, 107.5734, 0.7014809041309431], [-6.816973, 107.600391, 0.857365549493375], [-6.830761, 107.5024731, 0.8932190179267342], [-6.8436, 107.4784, 0.9859703819173812], [-6.864451000000001, 107.56333395, 0.8612626656274357]],
+                {
+  "minOpacity": 0.3,
+  "maxZoom": 1,
+  "radius": 17,
+  "blur": 3,
+  "gradient": {
+  "0.0": "rgb(0, 0, 0)",
+  "0.2": "rgb(0, 51, 51)",
+  "0.4": "rgb(0, 102, 102)",
+  "0.6": "rgb(0, 153, 153)",
+  "0.8": "rgb(0, 204, 204)",
+  "1.0": "rgb(0, 255, 255)",
+},
+}
+            );
+        
+    
+            heat_map_56f0f7187c9e1ddf31ce58e200865a48.addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var marker_de37de96c08b202a8c361b194769812a = L.marker(
+                [-6.9061442500000005, 107.57133171215168],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_44ebdb4dd6214d3b295e21b5ad4b0bb5 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e950 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_de37de96c08b202a8c361b194769812a.setIcon(div_icon_44ebdb4dd6214d3b295e21b5ad4b0bb5);
+        
+    
+        var popup_332b406740fff6c0506b9c4f3b2147f2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ea412659e61a602834225b0ba3778d20 = $(`<div id="html_ea412659e61a602834225b0ba3778d20" style="width: 100.0%; height: 100.0%;">Andir : 950 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_332b406740fff6c0506b9c4f3b2147f2.setContent(html_ea412659e61a602834225b0ba3778d20);
+            
+        
+
+        marker_de37de96c08b202a8c361b194769812a.bindPopup(popup_332b406740fff6c0506b9c4f3b2147f2)
+        ;
+
+        
+    
+    
+            var marker_0331dc36de8269cb3298c7a870b7813d = L.marker(
+                [-6.9387901, 107.60287028305659],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_001ac0492c922a7066c6fe100e8bd6cf = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e1 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_0331dc36de8269cb3298c7a870b7813d.setIcon(div_icon_001ac0492c922a7066c6fe100e8bd6cf);
+        
+    
+        var popup_9578af51acbf2d2502394ad6dbec151e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_18199f327e6961fb81c9a53e6b6521a2 = $(`<div id="html_18199f327e6961fb81c9a53e6b6521a2" style="width: 100.0%; height: 100.0%;">Astanaanyar : 1 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_9578af51acbf2d2502394ad6dbec151e.setContent(html_18199f327e6961fb81c9a53e6b6521a2);
+            
+        
+
+        marker_0331dc36de8269cb3298c7a870b7813d.bindPopup(popup_9578af51acbf2d2502394ad6dbec151e)
+        ;
+
+        
+    
+    
+            var marker_315ad4af8e59b3ff94db188e65dcd863 = L.marker(
+                [-6.9178562, 107.65988138469118],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_9023e12b9a42e9225b66529271e20692 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e670 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_315ad4af8e59b3ff94db188e65dcd863.setIcon(div_icon_9023e12b9a42e9225b66529271e20692);
+        
+    
+        var popup_5e171d70ba6a294f5c19c385473ff461 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8c36362c56e9ec9bceecb1d78cf85b3e = $(`<div id="html_8c36362c56e9ec9bceecb1d78cf85b3e" style="width: 100.0%; height: 100.0%;">Antapani : 670 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_5e171d70ba6a294f5c19c385473ff461.setContent(html_8c36362c56e9ec9bceecb1d78cf85b3e);
+            
+        
+
+        marker_315ad4af8e59b3ff94db188e65dcd863.bindPopup(popup_5e171d70ba6a294f5c19c385473ff461)
+        ;
+
+        
+    
+    
+            var marker_346ee1e62982b3cadbca3903d2314cab = L.marker(
+                [-6.92144665, 107.6770158552717],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_e3ba08184622098163f78751454032d5 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e775 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_346ee1e62982b3cadbca3903d2314cab.setIcon(div_icon_e3ba08184622098163f78751454032d5);
+        
+    
+        var popup_eb96c231dd3b5d3bbfecbf3f1da401dc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_53516bf188535a426b3eec6933bd9c0b = $(`<div id="html_53516bf188535a426b3eec6933bd9c0b" style="width: 100.0%; height: 100.0%;">Arcamanik : 775 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_eb96c231dd3b5d3bbfecbf3f1da401dc.setContent(html_53516bf188535a426b3eec6933bd9c0b);
+            
+        
+
+        marker_346ee1e62982b3cadbca3903d2314cab.bindPopup(popup_eb96c231dd3b5d3bbfecbf3f1da401dc)
+        ;
+
+        
+    
+    
+            var marker_202757d6fa30534d03e064455f233a11 = L.marker(
+                [-6.94029745, 107.57568267684286],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_f52cd4d920e5ad8d459a83b5370b8628 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e950 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_202757d6fa30534d03e064455f233a11.setIcon(div_icon_f52cd4d920e5ad8d459a83b5370b8628);
+        
+    
+        var popup_b62825205385947f103c92f8ae12c159 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9be6a24fbb31d6f2bfd49901ac23b6fc = $(`<div id="html_9be6a24fbb31d6f2bfd49901ac23b6fc" style="width: 100.0%; height: 100.0%;">Babakan Ciparay : 950 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_b62825205385947f103c92f8ae12c159.setContent(html_9be6a24fbb31d6f2bfd49901ac23b6fc);
+            
+        
+
+        marker_202757d6fa30534d03e064455f233a11.bindPopup(popup_b62825205385947f103c92f8ae12c159)
+        ;
+
+        
+    
+    
+            var marker_cf99d30eed74f052d75cc29b95352c2d = L.marker(
+                [-6.9558976, 107.63089148116754],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_5cbee329da1e7b8b964ef97fc363e4a9 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e2.67 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_cf99d30eed74f052d75cc29b95352c2d.setIcon(div_icon_5cbee329da1e7b8b964ef97fc363e4a9);
+        
+    
+        var popup_14fbcabd4611b5028cd72259f1834b75 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_64d3ac9eed2f85c1e23d60d20c763ef3 = $(`<div id="html_64d3ac9eed2f85c1e23d60d20c763ef3" style="width: 100.0%; height: 100.0%;">Bandung Kidul : 2.67 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_14fbcabd4611b5028cd72259f1834b75.setContent(html_64d3ac9eed2f85c1e23d60d20c763ef3);
+            
+        
+
+        marker_cf99d30eed74f052d75cc29b95352c2d.bindPopup(popup_14fbcabd4611b5028cd72259f1834b75)
+        ;
+
+        
+    
+    
+            var marker_03fe7d379060bd2ddfe93515db372738 = L.marker(
+                [-6.93193445, 107.555053271167],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_8a4787568280a0f23bedc564d07b0afd = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e585 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_03fe7d379060bd2ddfe93515db372738.setIcon(div_icon_8a4787568280a0f23bedc564d07b0afd);
+        
+    
+        var popup_4d9dd3ad7a3be6eda83e4c7576b93f55 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5bc5ec3206fe6b502921134b94cd9a4d = $(`<div id="html_5bc5ec3206fe6b502921134b94cd9a4d" style="width: 100.0%; height: 100.0%;">Bandung Kulon : 585 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_4d9dd3ad7a3be6eda83e4c7576b93f55.setContent(html_5bc5ec3206fe6b502921134b94cd9a4d);
+            
+        
+
+        marker_03fe7d379060bd2ddfe93515db372738.bindPopup(popup_4d9dd3ad7a3be6eda83e4c7576b93f55)
+        ;
+
+        
+    
+    
+            var marker_248d6b5638bf9cbc61a9812ca7266fc5 = L.marker(
+                [-6.9051357499999995, 107.6166565844473],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_ad53a89b46ed61fb3f7790f7d05ee195 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e580 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_248d6b5638bf9cbc61a9812ca7266fc5.setIcon(div_icon_ad53a89b46ed61fb3f7790f7d05ee195);
+        
+    
+        var popup_324d1e13d3e5446dd7141def685d7840 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f9f608ce95a2df57f3d0dc695a3a39ac = $(`<div id="html_f9f608ce95a2df57f3d0dc695a3a39ac" style="width: 100.0%; height: 100.0%;">Bandung Wetan : 580 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_324d1e13d3e5446dd7141def685d7840.setContent(html_f9f608ce95a2df57f3d0dc695a3a39ac);
+            
+        
+
+        marker_248d6b5638bf9cbc61a9812ca7266fc5.bindPopup(popup_324d1e13d3e5446dd7141def685d7840)
+        ;
+
+        
+    
+    
+            var marker_0fe14e162f536520b4e99a0be0c52141 = L.marker(
+                [-6.928054100000001, 107.6404417263918],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_345f0221dafc4367ab4de28ff5648851 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e600 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_0fe14e162f536520b4e99a0be0c52141.setIcon(div_icon_345f0221dafc4367ab4de28ff5648851);
+        
+    
+        var popup_24f4bf6309e9aa6ca3829ad8e7fbb10d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_519a54fb04636c5b629f87352375633e = $(`<div id="html_519a54fb04636c5b629f87352375633e" style="width: 100.0%; height: 100.0%;">Batununggal : 600 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_24f4bf6309e9aa6ca3829ad8e7fbb10d.setContent(html_519a54fb04636c5b629f87352375633e);
+            
+        
+
+        marker_0fe14e162f536520b4e99a0be0c52141.bindPopup(popup_24f4bf6309e9aa6ca3829ad8e7fbb10d)
+        ;
+
+        
+    
+    
+            var marker_d397c49dc267a3d9af4a27ee32cbd494 = L.marker(
+                [-6.93232645, 107.59074740446374],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_848fb51186a59e08bc4f2a398a70fcc3 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e675 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_d397c49dc267a3d9af4a27ee32cbd494.setIcon(div_icon_848fb51186a59e08bc4f2a398a70fcc3);
+        
+    
+        var popup_d027e510646a0396d273c23a3651ab94 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b5f2e9bb5480e97c028a0b17d6c5988a = $(`<div id="html_b5f2e9bb5480e97c028a0b17d6c5988a" style="width: 100.0%; height: 100.0%;">Bojongloa Kaler : 675 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_d027e510646a0396d273c23a3651ab94.setContent(html_b5f2e9bb5480e97c028a0b17d6c5988a);
+            
+        
+
+        marker_d397c49dc267a3d9af4a27ee32cbd494.bindPopup(popup_d027e510646a0396d273c23a3651ab94)
+        ;
+
+        
+    
+    
+            var marker_42282de86346e471d4c624030a0591ee = L.marker(
+                [-6.947036199999999, 107.59627135374859],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_989e807a63c2b4e02f2355a6dea298ef = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e625 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_42282de86346e471d4c624030a0591ee.setIcon(div_icon_989e807a63c2b4e02f2355a6dea298ef);
+        
+    
+        var popup_8abf0b17801219b878d94940211ef726 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_826af47c390890972591dfc9edb2eade = $(`<div id="html_826af47c390890972591dfc9edb2eade" style="width: 100.0%; height: 100.0%;">Bojongloa Kidul : 625 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_8abf0b17801219b878d94940211ef726.setContent(html_826af47c390890972591dfc9edb2eade);
+            
+        
+
+        marker_42282de86346e471d4c624030a0591ee.bindPopup(popup_8abf0b17801219b878d94940211ef726)
+        ;
+
+        
+    
+    
+            var marker_724fe41e75a0347be0b758435338630a = L.marker(
+                [-6.965688005385914, 107.63789418156816],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_27b01c47e5a316834987168cddba06ba = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e790 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_724fe41e75a0347be0b758435338630a.setIcon(div_icon_27b01c47e5a316834987168cddba06ba);
+        
+    
+        var popup_a3cfd622f330d20e31193e220a406945 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8c030991408d3ff04f5fef1a81d0f996 = $(`<div id="html_8c030991408d3ff04f5fef1a81d0f996" style="width: 100.0%; height: 100.0%;">Buah Batu : 790 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_a3cfd622f330d20e31193e220a406945.setContent(html_8c030991408d3ff04f5fef1a81d0f996);
+            
+        
+
+        marker_724fe41e75a0347be0b758435338630a.bindPopup(popup_a3cfd622f330d20e31193e220a406945)
+        ;
+
+        
+    
+    
+            var marker_ec225c012fd40ad3a5f7dae99ab414fe = L.marker(
+                [-6.8863341, 107.62897980161543],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_6cb166342573ae54c0fbe985229860f9 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e1.17 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_ec225c012fd40ad3a5f7dae99ab414fe.setIcon(div_icon_6cb166342573ae54c0fbe985229860f9);
+        
+    
+        var popup_c6f031ab11e89e6a0e2378fe4a7f4c80 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4ed637abb7e6b6ade70f3cdf2902086a = $(`<div id="html_4ed637abb7e6b6ade70f3cdf2902086a" style="width: 100.0%; height: 100.0%;">Cibeunying Kaler : 1.17 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_c6f031ab11e89e6a0e2378fe4a7f4c80.setContent(html_4ed637abb7e6b6ade70f3cdf2902086a);
+            
+        
+
+        marker_ec225c012fd40ad3a5f7dae99ab414fe.bindPopup(popup_c6f031ab11e89e6a0e2378fe4a7f4c80)
+        ;
+
+        
+    
+    
+            var marker_3025ef5e816ef02c9f0b67021cde47f2 = L.marker(
+                [-6.89851205, 107.65007706308097],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_1a78ad86fa5dd766dc2654ff75ec5d13 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e690 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_3025ef5e816ef02c9f0b67021cde47f2.setIcon(div_icon_1a78ad86fa5dd766dc2654ff75ec5d13);
+        
+    
+        var popup_2c2697682d3e23d8b81ac99bec8db758 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6476487f8bad23350fc4efb9d86dab14 = $(`<div id="html_6476487f8bad23350fc4efb9d86dab14" style="width: 100.0%; height: 100.0%;">Cibeunying Kidul : 690 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_2c2697682d3e23d8b81ac99bec8db758.setContent(html_6476487f8bad23350fc4efb9d86dab14);
+            
+        
+
+        marker_3025ef5e816ef02c9f0b67021cde47f2.bindPopup(popup_2c2697682d3e23d8b81ac99bec8db758)
+        ;
+
+        
+    
+    
+            var marker_3d62efae9f37a8716b06997434433680 = L.marker(
+                [-6.915058950000001, 107.72119143769423],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_8a4ecaa4dc8596a168a6649509535c63 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e850 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_3d62efae9f37a8716b06997434433680.setIcon(div_icon_8a4ecaa4dc8596a168a6649509535c63);
+        
+    
+        var popup_da0f5d3c0a6eec882a3b4dcdffdb3fc8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1cdd8b4bfe301504da1df05d6d8ea12d = $(`<div id="html_1cdd8b4bfe301504da1df05d6d8ea12d" style="width: 100.0%; height: 100.0%;">Cibiru : 850 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_da0f5d3c0a6eec882a3b4dcdffdb3fc8.setContent(html_1cdd8b4bfe301504da1df05d6d8ea12d);
+            
+        
+
+        marker_3d62efae9f37a8716b06997434433680.bindPopup(popup_da0f5d3c0a6eec882a3b4dcdffdb3fc8)
+        ;
+
+        
+    
+    
+            var marker_5b15d9adb2903ff56441a4b3018b2992 = L.marker(
+                [-6.9143518, 107.6024663],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_d74ded8687f66e4aeac67539ea5bd0dd = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e850 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_5b15d9adb2903ff56441a4b3018b2992.setIcon(div_icon_d74ded8687f66e4aeac67539ea5bd0dd);
+        
+    
+        var popup_d7a1567e7cfe0aa8dbd5d416944525b3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_443b3516e47375de9cdf9bdd26476b26 = $(`<div id="html_443b3516e47375de9cdf9bdd26476b26" style="width: 100.0%; height: 100.0%;">Cicendo : 850 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_d7a1567e7cfe0aa8dbd5d416944525b3.setContent(html_443b3516e47375de9cdf9bdd26476b26);
+            
+        
+
+        marker_5b15d9adb2903ff56441a4b3018b2992.bindPopup(popup_d7a1567e7cfe0aa8dbd5d416944525b3)
+        ;
+
+        
+    
+    
+            var marker_0bcdc4442d7ec5c29a5384f02ae114da = L.marker(
+                [-6.8627967, 107.60935594852518],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_0f39108a53473b146d642e697d6f33dd = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e900 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_0bcdc4442d7ec5c29a5384f02ae114da.setIcon(div_icon_0f39108a53473b146d642e697d6f33dd);
+        
+    
+        var popup_90ca0bb0528f85ba9d4b62a56f693595 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8185607e208d70469ae8252acaae5fa2 = $(`<div id="html_8185607e208d70469ae8252acaae5fa2" style="width: 100.0%; height: 100.0%;">Cidadap : 900 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_90ca0bb0528f85ba9d4b62a56f693595.setContent(html_8185607e208d70469ae8252acaae5fa2);
+            
+        
+
+        marker_0bcdc4442d7ec5c29a5384f02ae114da.bindPopup(popup_90ca0bb0528f85ba9d4b62a56f693595)
+        ;
+
+        
+    
+    
+            var marker_bc31a765bfeb1a04415fda9cd1afb027 = L.marker(
+                [-6.9283041, 107.69024507286085],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_fe6fea28c73e3cb70f99d288ec3a01e0 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e1.45 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_bc31a765bfeb1a04415fda9cd1afb027.setIcon(div_icon_fe6fea28c73e3cb70f99d288ec3a01e0);
+        
+    
+        var popup_b03ed9788b3ca293dc1ecad33e8f0698 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ead277fe8e3d5f24e72724447fb53c97 = $(`<div id="html_ead277fe8e3d5f24e72724447fb53c97" style="width: 100.0%; height: 100.0%;">Cinambo : 1.45 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_b03ed9788b3ca293dc1ecad33e8f0698.setContent(html_ead277fe8e3d5f24e72724447fb53c97);
+            
+        
+
+        marker_bc31a765bfeb1a04415fda9cd1afb027.bindPopup(popup_b03ed9788b3ca293dc1ecad33e8f0698)
+        ;
+
+        
+    
+    
+            var marker_144f55ad8bf3531e6bc5bc9bba249584 = L.marker(
+                [-6.880933349999999, 107.61392108064138],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_ddf1f33dc83a9c312b5a62415b956474 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e850 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_144f55ad8bf3531e6bc5bc9bba249584.setIcon(div_icon_ddf1f33dc83a9c312b5a62415b956474);
+        
+    
+        var popup_c0d51935c9577eefb2840f56dee4ea06 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cddc7d31e42751f97ec33cc90e2d25d8 = $(`<div id="html_cddc7d31e42751f97ec33cc90e2d25d8" style="width: 100.0%; height: 100.0%;">Coblong : 850 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_c0d51935c9577eefb2840f56dee4ea06.setContent(html_cddc7d31e42751f97ec33cc90e2d25d8);
+            
+        
+
+        marker_144f55ad8bf3531e6bc5bc9bba249584.bindPopup(popup_c0d51935c9577eefb2840f56dee4ea06)
+        ;
+
+        
+    
+    
+            var marker_bcb7cf66edb1c8bd5309a7be2211dd4b = L.marker(
+                [-6.95283425, 107.69811481410812],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_1d3aa11c510b69a8b65a714261ab6e25 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e895 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_bcb7cf66edb1c8bd5309a7be2211dd4b.setIcon(div_icon_1d3aa11c510b69a8b65a714261ab6e25);
+        
+    
+        var popup_1c96e50694d443d0b9d4ab6fd79ffd71 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_52c90510ce2f86b02121824f751aee1f = $(`<div id="html_52c90510ce2f86b02121824f751aee1f" style="width: 100.0%; height: 100.0%;">Gedebage : 895 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_1c96e50694d443d0b9d4ab6fd79ffd71.setContent(html_52c90510ce2f86b02121824f751aee1f);
+            
+        
+
+        marker_bcb7cf66edb1c8bd5309a7be2211dd4b.bindPopup(popup_1c96e50694d443d0b9d4ab6fd79ffd71)
+        ;
+
+        
+    
+    
+            var marker_b9f136666b068c0d5d82044ac6a355b4 = L.marker(
+                [-6.9247499, 107.6462773],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_a8c9e36407f73bdbfd6c4c34bb338d43 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e650 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_b9f136666b068c0d5d82044ac6a355b4.setIcon(div_icon_a8c9e36407f73bdbfd6c4c34bb338d43);
+        
+    
+        var popup_7338cad4b9aa809bdc0b019449549b03 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d041340e03b194a81e34736967a90c82 = $(`<div id="html_d041340e03b194a81e34736967a90c82" style="width: 100.0%; height: 100.0%;">Kiaracondong : 650 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_7338cad4b9aa809bdc0b019449549b03.setContent(html_d041340e03b194a81e34736967a90c82);
+            
+        
+
+        marker_b9f136666b068c0d5d82044ac6a355b4.bindPopup(popup_7338cad4b9aa809bdc0b019449549b03)
+        ;
+
+        
+    
+    
+            var marker_7cccf49cc3f4cbe90f1f8d35bac2b4f3 = L.marker(
+                [-6.9343483, 107.62621853326837],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_ffc94329040a11636a99d6dc74ad0809 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e85 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_7cccf49cc3f4cbe90f1f8d35bac2b4f3.setIcon(div_icon_ffc94329040a11636a99d6dc74ad0809);
+        
+    
+        var popup_d1d4d1b8b60b13ea22f0e5cfbadbfdb8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ebfe0d0498bbe789f53abd0e42c54eff = $(`<div id="html_ebfe0d0498bbe789f53abd0e42c54eff" style="width: 100.0%; height: 100.0%;">Lengkong : 85 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_d1d4d1b8b60b13ea22f0e5cfbadbfdb8.setContent(html_ebfe0d0498bbe789f53abd0e42c54eff);
+            
+        
+
+        marker_7cccf49cc3f4cbe90f1f8d35bac2b4f3.bindPopup(popup_d1d4d1b8b60b13ea22f0e5cfbadbfdb8)
+        ;
+
+        
+    
+    
+            var marker_890d6bf289323511bb5473f9fd8789ee = L.marker(
+                [-6.8957284, 107.67119444335107],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_b852ea995030e399dcad79df04f2ac00 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e154 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_890d6bf289323511bb5473f9fd8789ee.setIcon(div_icon_b852ea995030e399dcad79df04f2ac00);
+        
+    
+        var popup_2a63ab768ab830f5ccc4e51529e902b2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7926301560ee931a0c989b9c47a2662e = $(`<div id="html_7926301560ee931a0c989b9c47a2662e" style="width: 100.0%; height: 100.0%;">Mandalajati : 154 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_2a63ab768ab830f5ccc4e51529e902b2.setContent(html_7926301560ee931a0c989b9c47a2662e);
+            
+        
+
+        marker_890d6bf289323511bb5473f9fd8789ee.bindPopup(popup_2a63ab768ab830f5ccc4e51529e902b2)
+        ;
+
+        
+    
+    
+            var marker_570585eb11e9d27e627b22fea9f0f978 = L.marker(
+                [-6.9535356, 107.67520978505222],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_b3fefc1e0d225de1ca54fa7a2056d940 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e750 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_570585eb11e9d27e627b22fea9f0f978.setIcon(div_icon_b3fefc1e0d225de1ca54fa7a2056d940);
+        
+    
+        var popup_b0a1bbb89395b356beaa99d4e84e9f66 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0552edce3e55dbabda06f556f448b2e3 = $(`<div id="html_0552edce3e55dbabda06f556f448b2e3" style="width: 100.0%; height: 100.0%;">Rancasari : 750 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_b0a1bbb89395b356beaa99d4e84e9f66.setContent(html_0552edce3e55dbabda06f556f448b2e3);
+            
+        
+
+        marker_570585eb11e9d27e627b22fea9f0f978.bindPopup(popup_b0a1bbb89395b356beaa99d4e84e9f66)
+        ;
+
+        
+    
+    
+            var marker_19678087489945ee2b879bc309823744 = L.marker(
+                [-6.939712849999999, 107.613796906891],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_3ac4d53c21dbd59a2a11fab7d6c56136 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e800 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_19678087489945ee2b879bc309823744.setIcon(div_icon_3ac4d53c21dbd59a2a11fab7d6c56136);
+        
+    
+        var popup_0727c51c2c0e8e6230706fda4bbb354f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7c412a697fd8117648ac58fe9ca8b985 = $(`<div id="html_7c412a697fd8117648ac58fe9ca8b985" style="width: 100.0%; height: 100.0%;">Regol : 800 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_0727c51c2c0e8e6230706fda4bbb354f.setContent(html_7c412a697fd8117648ac58fe9ca8b985);
+            
+        
+
+        marker_19678087489945ee2b879bc309823744.bindPopup(popup_0727c51c2c0e8e6230706fda4bbb354f)
+        ;
+
+        
+    
+    
+            var marker_34ec831edca7704a71085ac1ce781665 = L.marker(
+                [-6.8923, 107.5909],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_7431c66731df926a4fbd1f43cdc9f599 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e1.2 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_34ec831edca7704a71085ac1ce781665.setIcon(div_icon_7431c66731df926a4fbd1f43cdc9f599);
+        
+    
+        var popup_5455d9d93e88ecfa7b356eb24052cdf1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_09059d99f52c5ca70501ef7be4f5483a = $(`<div id="html_09059d99f52c5ca70501ef7be4f5483a" style="width: 100.0%; height: 100.0%;">Sukajadi : 1.2 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_5455d9d93e88ecfa7b356eb24052cdf1.setContent(html_09059d99f52c5ca70501ef7be4f5483a);
+            
+        
+
+        marker_34ec831edca7704a71085ac1ce781665.bindPopup(popup_5455d9d93e88ecfa7b356eb24052cdf1)
+        ;
+
+        
+    
+    
+            var marker_56b53406b57e058dde18503ea13f7f92 = L.marker(
+                [-6.863, 107.5881],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_ebc7533ffc587b2231d9c97507916ced = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e700 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_56b53406b57e058dde18503ea13f7f92.setIcon(div_icon_ebc7533ffc587b2231d9c97507916ced);
+        
+    
+        var popup_52d2092733bddacf745210f2d8a32b32 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_40a82995b5580d4e8b1ce7c08480588b = $(`<div id="html_40a82995b5580d4e8b1ce7c08480588b" style="width: 100.0%; height: 100.0%;">Sukasari : 700 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_52d2092733bddacf745210f2d8a32b32.setContent(html_40a82995b5580d4e8b1ce7c08480588b);
+            
+        
+
+        marker_56b53406b57e058dde18503ea13f7f92.bindPopup(popup_52d2092733bddacf745210f2d8a32b32)
+        ;
+
+        
+    
+    
+            var marker_262100e6600f4c0ba160a9c787090328 = L.marker(
+                [-6.9143889000000005, 107.61702181771668],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_3ae552b6a6513bab305433afa73cf7c9 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e2.75 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_262100e6600f4c0ba160a9c787090328.setIcon(div_icon_3ae552b6a6513bab305433afa73cf7c9);
+        
+    
+        var popup_5e6f335bf018126b2de2720ef7edc5db = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c5739a18a1098536e3c4c97bf29cf9be = $(`<div id="html_c5739a18a1098536e3c4c97bf29cf9be" style="width: 100.0%; height: 100.0%;">Sumur Bandung : 2.75 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_5e6f335bf018126b2de2720ef7edc5db.setContent(html_c5739a18a1098536e3c4c97bf29cf9be);
+            
+        
+
+        marker_262100e6600f4c0ba160a9c787090328.bindPopup(popup_5e6f335bf018126b2de2720ef7edc5db)
+        ;
+
+        
+    
+    
+            var marker_85ccacf59b830ac692d46f878b22bed6 = L.marker(
+                [-6.9053267, 107.710954740483],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_8286c2635fae01eaafab82c503975bd6 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e599 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_85ccacf59b830ac692d46f878b22bed6.setIcon(div_icon_8286c2635fae01eaafab82c503975bd6);
+        
+    
+        var popup_37881cdfaab01dffcd4d112cfa286f4a = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_255d154cb74dfa19d7a51b63ac70b4b8 = $(`<div id="html_255d154cb74dfa19d7a51b63ac70b4b8" style="width: 100.0%; height: 100.0%;">Ujungberung : 599 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_37881cdfaab01dffcd4d112cfa286f4a.setContent(html_255d154cb74dfa19d7a51b63ac70b4b8);
+            
+        
+
+        marker_85ccacf59b830ac692d46f878b22bed6.bindPopup(popup_37881cdfaab01dffcd4d112cfa286f4a)
+        ;
+
+        
+    
+    
+            var marker_f18db91900ee60dacbc016c638e16eab = L.marker(
+                [-6.999963, 107.620874],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_5021eaeaeb76daee6e7b0b8c12bbcaf3 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e850 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_f18db91900ee60dacbc016c638e16eab.setIcon(div_icon_5021eaeaeb76daee6e7b0b8c12bbcaf3);
+        
+    
+        var popup_b643506cefcd3898df3922c8084e5d4d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_81d590c8f30d1ee7f7f0ac8a7e2537d8 = $(`<div id="html_81d590c8f30d1ee7f7f0ac8a7e2537d8" style="width: 100.0%; height: 100.0%;">Baleendah : 850 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_b643506cefcd3898df3922c8084e5d4d.setContent(html_81d590c8f30d1ee7f7f0ac8a7e2537d8);
+            
+        
+
+        marker_f18db91900ee60dacbc016c638e16eab.bindPopup(popup_b643506cefcd3898df3922c8084e5d4d)
+        ;
+
+        
+    
+    
+            var marker_20de9baf750876e5a690115c0c262b2f = L.marker(
+                [-7.0481094, 107.5923258],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_d150b596a31b3f56e46f4362d402a78e = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e2.3 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_20de9baf750876e5a690115c0c262b2f.setIcon(div_icon_d150b596a31b3f56e46f4362d402a78e);
+        
+    
+        var popup_fb4464a7bcb518953408e1f6773d486f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9e7247ef69032a2318b74d2d185d80e8 = $(`<div id="html_9e7247ef69032a2318b74d2d185d80e8" style="width: 100.0%; height: 100.0%;">Banjaran : 2.3 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_fb4464a7bcb518953408e1f6773d486f.setContent(html_9e7247ef69032a2318b74d2d185d80e8);
+            
+        
+
+        marker_20de9baf750876e5a690115c0c262b2f.bindPopup(popup_fb4464a7bcb518953408e1f6773d486f)
+        ;
+
+        
+    
+    
+            var marker_b2fb92cdc01ccd8021e098e82e7403ff = L.marker(
+                [-6.9816369, 107.6365711],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_c4510d77bb97ea5ae0dd4a81e1ad38eb = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e880 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_b2fb92cdc01ccd8021e098e82e7403ff.setIcon(div_icon_c4510d77bb97ea5ae0dd4a81e1ad38eb);
+        
+    
+        var popup_1380a2732ba57bf3f2ca11a1ff15bb9b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1ed56e4b4fc0133af9cbe6e7fa2e56a9 = $(`<div id="html_1ed56e4b4fc0133af9cbe6e7fa2e56a9" style="width: 100.0%; height: 100.0%;">Bojongsoang : 880 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_1380a2732ba57bf3f2ca11a1ff15bb9b.setContent(html_1ed56e4b4fc0133af9cbe6e7fa2e56a9);
+            
+        
+
+        marker_b2fb92cdc01ccd8021e098e82e7403ff.bindPopup(popup_1380a2732ba57bf3f2ca11a1ff15bb9b)
+        ;
+
+        
+    
+    
+            var marker_8353e8d30bf0585c6cc203f4f4ffc432 = L.marker(
+                [-6.9815914, 107.8327237],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_4392e2fcf06311b9e9987149945cd6a4 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e2.2 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_8353e8d30bf0585c6cc203f4f4ffc432.setIcon(div_icon_4392e2fcf06311b9e9987149945cd6a4);
+        
+    
+        var popup_57ef495adcae1b7b7c3714f2f842cccc = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f20dbfb9324a6be2f7ff6ad277afd0f8 = $(`<div id="html_f20dbfb9324a6be2f7ff6ad277afd0f8" style="width: 100.0%; height: 100.0%;">Cicalengka : 2.2 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_57ef495adcae1b7b7c3714f2f842cccc.setContent(html_f20dbfb9324a6be2f7ff6ad277afd0f8);
+            
+        
+
+        marker_8353e8d30bf0585c6cc203f4f4ffc432.bindPopup(popup_57ef495adcae1b7b7c3714f2f842cccc)
+        ;
+
+        
+    
+    
+            var marker_211b062f5b62aa5f1987d7832b064894 = L.marker(
+                [-6.9049243, 107.6941319],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_c714d4e7dacae8a59aa21043747b0108 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e765 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_211b062f5b62aa5f1987d7832b064894.setIcon(div_icon_c714d4e7dacae8a59aa21043747b0108);
+        
+    
+        var popup_a0ed038b898c030bb79692dff5e11d6b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_93edd7a36588469bc93f4ef3e9b8f8cf = $(`<div id="html_93edd7a36588469bc93f4ef3e9b8f8cf" style="width: 100.0%; height: 100.0%;">Cilengkrang : 765 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_a0ed038b898c030bb79692dff5e11d6b.setContent(html_93edd7a36588469bc93f4ef3e9b8f8cf);
+            
+        
+
+        marker_211b062f5b62aa5f1987d7832b064894.bindPopup(popup_a0ed038b898c030bb79692dff5e11d6b)
+        ;
+
+        
+    
+    
+            var marker_f348486edfd9b7e2454bf96fd21ad1c1 = L.marker(
+                [-6.9411936, 107.7434564],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_2671ba36e2c39a83de9050565aeeec7a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e475 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_f348486edfd9b7e2454bf96fd21ad1c1.setIcon(div_icon_2671ba36e2c39a83de9050565aeeec7a);
+        
+    
+        var popup_4b80fc24b35eb4386b46772adcd31601 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_88700d5e3363341c94731befe9a90985 = $(`<div id="html_88700d5e3363341c94731befe9a90985" style="width: 100.0%; height: 100.0%;">Cileunyi : 475 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_4b80fc24b35eb4386b46772adcd31601.setContent(html_88700d5e3363341c94731befe9a90985);
+            
+        
+
+        marker_f348486edfd9b7e2454bf96fd21ad1c1.bindPopup(popup_4b80fc24b35eb4386b46772adcd31601)
+        ;
+
+        
+    
+    
+            var marker_6757e2a4aeae87d862cbe83b7f65e6ed = L.marker(
+                [-7.0869685, 107.5627557],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_af187a1285ca856b595f0b633bda1adb = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e1.2 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_6757e2a4aeae87d862cbe83b7f65e6ed.setIcon(div_icon_af187a1285ca856b595f0b633bda1adb);
+        
+    
+        var popup_e4b0db172477c0e38bddf37c668c6943 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_92dc42d3cf7fb4b5ad12e731a9bcb9e9 = $(`<div id="html_92dc42d3cf7fb4b5ad12e731a9bcb9e9" style="width: 100.0%; height: 100.0%;">Cimaung : 1.2 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_e4b0db172477c0e38bddf37c668c6943.setContent(html_92dc42d3cf7fb4b5ad12e731a9bcb9e9);
+            
+        
+
+        marker_6757e2a4aeae87d862cbe83b7f65e6ed.bindPopup(popup_e4b0db172477c0e38bddf37c668c6943)
+        ;
+
+        
+    
+    
+            var marker_7f06523592ea53aa8ee5b69de446fac2 = L.marker(
+                [-6.8799677, 107.6638481],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_cda0b6d6a29f72426c607dd02a42fd6a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e880 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_7f06523592ea53aa8ee5b69de446fac2.setIcon(div_icon_cda0b6d6a29f72426c607dd02a42fd6a);
+        
+    
+        var popup_64fa632edd58057a5fa7ad5892312ea7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e67d303822e4c9f7e2fe17af7e7c57bf = $(`<div id="html_e67d303822e4c9f7e2fe17af7e7c57bf" style="width: 100.0%; height: 100.0%;">Cimenyan : 880 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_64fa632edd58057a5fa7ad5892312ea7.setContent(html_e67d303822e4c9f7e2fe17af7e7c57bf);
+            
+        
+
+        marker_7f06523592ea53aa8ee5b69de446fac2.bindPopup(popup_64fa632edd58057a5fa7ad5892312ea7)
+        ;
+
+        
+    
+    
+            var marker_bb9d645ee0bea9db1f84ef4e0a4e9335 = L.marker(
+                [-7.0359615, 107.7125467],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_ad0bce5b118523d2dd1427dd7276a5b7 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e1 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_bb9d645ee0bea9db1f84ef4e0a4e9335.setIcon(div_icon_ad0bce5b118523d2dd1427dd7276a5b7);
+        
+    
+        var popup_d6c9c2effcc7bfb02e523fd354274ae2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a3ed89fe26c303b31c5b56505ddbc538 = $(`<div id="html_a3ed89fe26c303b31c5b56505ddbc538" style="width: 100.0%; height: 100.0%;">Ciparay : 1 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_d6c9c2effcc7bfb02e523fd354274ae2.setContent(html_a3ed89fe26c303b31c5b56505ddbc538);
+            
+        
+
+        marker_bb9d645ee0bea9db1f84ef4e0a4e9335.bindPopup(popup_d6c9c2effcc7bfb02e523fd354274ae2)
+        ;
+
+        
+    
+    
+            var marker_62bd37c194a727426e9df43dd91bb2ff = L.marker(
+                [-7.1027234, 107.4641673],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_7b5380e9e2d28c35acf0c9e47d352a0a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e959 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_62bd37c194a727426e9df43dd91bb2ff.setIcon(div_icon_7b5380e9e2d28c35acf0c9e47d352a0a);
+        
+    
+        var popup_199af72b22171efbf7b8a001f59c43f1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_f430bdd9e9392fb86ae8b4536031ed77 = $(`<div id="html_f430bdd9e9392fb86ae8b4536031ed77" style="width: 100.0%; height: 100.0%;">Ciwidey : 959 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_199af72b22171efbf7b8a001f59c43f1.setContent(html_f430bdd9e9392fb86ae8b4536031ed77);
+            
+        
+
+        marker_62bd37c194a727426e9df43dd91bb2ff.bindPopup(popup_199af72b22171efbf7b8a001f59c43f1)
+        ;
+
+        
+    
+    
+            var marker_a369b6b27b0a654df07a44ca730765ab = L.marker(
+                [-6.9862912, 107.626449],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_5247865aa45ffde2ce8dd98d4e7bc99d = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e1.15 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_a369b6b27b0a654df07a44ca730765ab.setIcon(div_icon_5247865aa45ffde2ce8dd98d4e7bc99d);
+        
+    
+        var popup_2e22a3b078760c62ce413bcfdba8b062 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9b9ae8ea1dde21dbe7e4af950e63454b = $(`<div id="html_9b9ae8ea1dde21dbe7e4af950e63454b" style="width: 100.0%; height: 100.0%;">Dayeuhkolot : 1.15 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_2e22a3b078760c62ce413bcfdba8b062.setContent(html_9b9ae8ea1dde21dbe7e4af950e63454b);
+            
+        
+
+        marker_a369b6b27b0a654df07a44ca730765ab.bindPopup(popup_2e22a3b078760c62ce413bcfdba8b062)
+        ;
+
+        
+    
+    
+            var marker_79a77e57ed0b071f8e3a671422849f2c = L.marker(
+                [-7.0099447, 107.5507035],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_cfe7c9503488e86800014043ce01918a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e250 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_79a77e57ed0b071f8e3a671422849f2c.setIcon(div_icon_cfe7c9503488e86800014043ce01918a);
+        
+    
+        var popup_a2242acca04e606d8ad257ee7f10df0c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_baca00d0c0a5755f14fc7961d713223e = $(`<div id="html_baca00d0c0a5755f14fc7961d713223e" style="width: 100.0%; height: 100.0%;">Katapang : 250 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_a2242acca04e606d8ad257ee7f10df0c.setContent(html_baca00d0c0a5755f14fc7961d713223e);
+            
+        
+
+        marker_79a77e57ed0b071f8e3a671422849f2c.bindPopup(popup_a2242acca04e606d8ad257ee7f10df0c)
+        ;
+
+        
+    
+    
+            var marker_b4d657177360da7699a691ffb6171c62 = L.marker(
+                [-7.1968665, 107.6708811],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_77f4e230b4ef9f55649310e9d9a188bd = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e2 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_b4d657177360da7699a691ffb6171c62.setIcon(div_icon_77f4e230b4ef9f55649310e9d9a188bd);
+        
+    
+        var popup_f7da3ff2184f57b56840146adba96d18 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b1905f380b1d9d33228fe9d6da6930ec = $(`<div id="html_b1905f380b1d9d33228fe9d6da6930ec" style="width: 100.0%; height: 100.0%;">Kertasari : 2 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_f7da3ff2184f57b56840146adba96d18.setContent(html_b1905f380b1d9d33228fe9d6da6930ec);
+            
+        
+
+        marker_b4d657177360da7699a691ffb6171c62.bindPopup(popup_f7da3ff2184f57b56840146adba96d18)
+        ;
+
+        
+    
+    
+            var marker_a70fee00775dcc2a494ff10414b39b6e = L.marker(
+                [-6.9309792, 107.5421506],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_b9c6b5f065fd0649322b0a31b5c47ba0 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e650 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_a70fee00775dcc2a494ff10414b39b6e.setIcon(div_icon_b9c6b5f065fd0649322b0a31b5c47ba0);
+        
+    
+        var popup_0cd162d2d14aec358e1a87b3c52884d1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_02a18ecb52931dbafd2c8acde5d83a4c = $(`<div id="html_02a18ecb52931dbafd2c8acde5d83a4c" style="width: 100.0%; height: 100.0%;">Margaasih : 650 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_0cd162d2d14aec358e1a87b3c52884d1.setContent(html_02a18ecb52931dbafd2c8acde5d83a4c);
+            
+        
+
+        marker_a70fee00775dcc2a494ff10414b39b6e.bindPopup(popup_0cd162d2d14aec358e1a87b3c52884d1)
+        ;
+
+        
+    
+    
+            var marker_dedfed34e80494cef36b84097f235791 = L.marker(
+                [-6.9716176, 107.584734],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_ba164e7ecc110de0478b05b5abcb6295 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e700 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_dedfed34e80494cef36b84097f235791.setIcon(div_icon_ba164e7ecc110de0478b05b5abcb6295);
+        
+    
+        var popup_f0992be50e234ca1d8ab67741ab568b5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_74d52a456c594d05e95aca198f735b42 = $(`<div id="html_74d52a456c594d05e95aca198f735b42" style="width: 100.0%; height: 100.0%;">Margahayu : 700 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_f0992be50e234ca1d8ab67741ab568b5.setContent(html_74d52a456c594d05e95aca198f735b42);
+            
+        
+
+        marker_dedfed34e80494cef36b84097f235791.bindPopup(popup_f0992be50e234ca1d8ab67741ab568b5)
+        ;
+
+        
+    
+    
+            var marker_1ad510058be13a25a7fc4dfb8ac88c0b = L.marker(
+                [-7.0660858, 107.7132262],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_ad47f6493e946aaa8463dccca087e112 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e3.2 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_1ad510058be13a25a7fc4dfb8ac88c0b.setIcon(div_icon_ad47f6493e946aaa8463dccca087e112);
+        
+    
+        var popup_4d91fc10176267a45ff77d529612acc0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c7c8178e0ec0cfe74c351868e77229b4 = $(`<div id="html_c7c8178e0ec0cfe74c351868e77229b4" style="width: 100.0%; height: 100.0%;">Paseh : 3.2 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_4d91fc10176267a45ff77d529612acc0.setContent(html_c7c8178e0ec0cfe74c351868e77229b4);
+            
+        
+
+        marker_1ad510058be13a25a7fc4dfb8ac88c0b.bindPopup(popup_4d91fc10176267a45ff77d529612acc0)
+        ;
+
+        
+    
+    
+            var marker_9dade12e392574474270dfdfb4a4c8cb = L.marker(
+                [-7.0888583, 107.4800032],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_ab04f8b62b1934855dc5aaddabac8b01 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e6.5 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_9dade12e392574474270dfdfb4a4c8cb.setIcon(div_icon_ab04f8b62b1934855dc5aaddabac8b01);
+        
+    
+        var popup_3654a833851aa6944e5fc1dbd1021e43 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_613bd1c04ad2724b746d0175f2112220 = $(`<div id="html_613bd1c04ad2724b746d0175f2112220" style="width: 100.0%; height: 100.0%;">Pasirjambu : 6.5 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_3654a833851aa6944e5fc1dbd1021e43.setContent(html_613bd1c04ad2724b746d0175f2112220);
+            
+        
+
+        marker_9dade12e392574474270dfdfb4a4c8cb.bindPopup(popup_3654a833851aa6944e5fc1dbd1021e43)
+        ;
+
+        
+    
+    
+            var marker_21db0ee4d6b3c7c96e41cc9a6a13e08a = L.marker(
+                [-6.9648801, 107.7559578],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_79aed72a91a936a83041f5fbefd886cc = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e540 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_21db0ee4d6b3c7c96e41cc9a6a13e08a.setIcon(div_icon_79aed72a91a936a83041f5fbefd886cc);
+        
+    
+        var popup_9641ccafbf3a7ddf7218c89fa1308f1d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0d21864a23ab9fddc33e0c2771c4b442 = $(`<div id="html_0d21864a23ab9fddc33e0c2771c4b442" style="width: 100.0%; height: 100.0%;">Rancaekek : 540 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_9641ccafbf3a7ddf7218c89fa1308f1d.setContent(html_0d21864a23ab9fddc33e0c2771c4b442);
+            
+        
+
+        marker_21db0ee4d6b3c7c96e41cc9a6a13e08a.bindPopup(popup_9641ccafbf3a7ddf7218c89fa1308f1d)
+        ;
+
+        
+    
+    
+            var marker_b8b3e68c5d02ce49b9c1df0c00943b5d = L.marker(
+                [-7.0268685, 107.5167964],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_33122c6ed0df601be4e717d406287aea = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e775 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_b8b3e68c5d02ce49b9c1df0c00943b5d.setIcon(div_icon_33122c6ed0df601be4e717d406287aea);
+        
+    
+        var popup_eb0ec60b5517e841a5d3f9030ae8f44d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6f031bcfd89f4d69f858cc70016b32f9 = $(`<div id="html_6f031bcfd89f4d69f858cc70016b32f9" style="width: 100.0%; height: 100.0%;">Soreang : 775 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_eb0ec60b5517e841a5d3f9030ae8f44d.setContent(html_6f031bcfd89f4d69f858cc70016b32f9);
+            
+        
+
+        marker_b8b3e68c5d02ce49b9c1df0c00943b5d.bindPopup(popup_eb0ec60b5517e841a5d3f9030ae8f44d)
+        ;
+
+        
+    
+    
+            var marker_94845e613bcaa04b108f997e3dbe4a14 = L.marker(
+                [-6.901, 107.501],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_e03176beea5f3d670f39bf1c873aa33a = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e2.29 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_94845e613bcaa04b108f997e3dbe4a14.setIcon(div_icon_e03176beea5f3d670f39bf1c873aa33a);
+        
+    
+        var popup_d1453f531be2e5d059b9c87d2637dfde = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ad7168a5a92891441bc2a34b65f1ccbc = $(`<div id="html_ad7168a5a92891441bc2a34b65f1ccbc" style="width: 100.0%; height: 100.0%;">Batujajar : 2.29 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_d1453f531be2e5d059b9c87d2637dfde.setContent(html_ad7168a5a92891441bc2a34b65f1ccbc);
+            
+        
+
+        marker_94845e613bcaa04b108f997e3dbe4a14.bindPopup(popup_d1453f531be2e5d059b9c87d2637dfde)
+        ;
+
+        
+    
+    
+            var marker_2aae89c88d6b95ea094f3e2380739670 = L.marker(
+                [-6.7973, 107.5734],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_6e9288cd0d2defb312792bf30b82e57e = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e2 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_2aae89c88d6b95ea094f3e2380739670.setIcon(div_icon_6e9288cd0d2defb312792bf30b82e57e);
+        
+    
+        var popup_b10eb272ff5b449e309943aa42483fb2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4e5bd5ee5e0a83f5e68bc676594274dd = $(`<div id="html_4e5bd5ee5e0a83f5e68bc676594274dd" style="width: 100.0%; height: 100.0%;">Cisarua : 2 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_b10eb272ff5b449e309943aa42483fb2.setContent(html_4e5bd5ee5e0a83f5e68bc676594274dd);
+            
+        
+
+        marker_2aae89c88d6b95ea094f3e2380739670.bindPopup(popup_b10eb272ff5b449e309943aa42483fb2)
+        ;
+
+        
+    
+    
+            var marker_8c8840ec148cafb17bfc6ed504ad780a = L.marker(
+                [-6.816973, 107.600391],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_db2112974b20133966bc7396bb730e41 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e1 M\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_8c8840ec148cafb17bfc6ed504ad780a.setIcon(div_icon_db2112974b20133966bc7396bb730e41);
+        
+    
+        var popup_e8e9ee4a17e02e98c0d540f2d232f316 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_95006e336eaad1d0100bcbc0503f128b = $(`<div id="html_95006e336eaad1d0100bcbc0503f128b" style="width: 100.0%; height: 100.0%;">Lembang : 1 M, LT:40.00, LB:40.00</div>`)[0];
+                popup_e8e9ee4a17e02e98c0d540f2d232f316.setContent(html_95006e336eaad1d0100bcbc0503f128b);
+            
+        
+
+        marker_8c8840ec148cafb17bfc6ed504ad780a.bindPopup(popup_e8e9ee4a17e02e98c0d540f2d232f316)
+        ;
+
+        
+    
+    
+            var marker_8a344cb98f8507d7628187cb82a64c5b = L.marker(
+                [-6.830761, 107.5024731],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_914a81c708a0ab32d8d96d798e807ef7 = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e770 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_8a344cb98f8507d7628187cb82a64c5b.setIcon(div_icon_914a81c708a0ab32d8d96d798e807ef7);
+        
+    
+        var popup_bd26700da00e2198aad8c7bba8f2eeed = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b8415239e7c732df0bc1e4934d109b76 = $(`<div id="html_b8415239e7c732df0bc1e4934d109b76" style="width: 100.0%; height: 100.0%;">Ngamprah : 770 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_bd26700da00e2198aad8c7bba8f2eeed.setContent(html_b8415239e7c732df0bc1e4934d109b76);
+            
+        
+
+        marker_8a344cb98f8507d7628187cb82a64c5b.bindPopup(popup_bd26700da00e2198aad8c7bba8f2eeed)
+        ;
+
+        
+    
+    
+            var marker_316c6f0a33fc97a51a3dfbdeadca4e69 = L.marker(
+                [-6.8436, 107.4784],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_141a53e6035eb45fe7cc1202d280e77c = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e175 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_316c6f0a33fc97a51a3dfbdeadca4e69.setIcon(div_icon_141a53e6035eb45fe7cc1202d280e77c);
+        
+    
+        var popup_3e1e81ebbfaac3704ffe61c27836284c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2bc7158be9c7990eec58d371bedc28d2 = $(`<div id="html_2bc7158be9c7990eec58d371bedc28d2" style="width: 100.0%; height: 100.0%;">Padalarang : 175 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_3e1e81ebbfaac3704ffe61c27836284c.setContent(html_2bc7158be9c7990eec58d371bedc28d2);
+            
+        
+
+        marker_316c6f0a33fc97a51a3dfbdeadca4e69.bindPopup(popup_3e1e81ebbfaac3704ffe61c27836284c)
+        ;
+
+        
+    
+    
+            var marker_b484dccf5a34d62188296e573224d1be = L.marker(
+                [-6.864451000000001, 107.56333395],
+                {
+}
+            ).addTo(map_9901e8d182030d96fb046a0a889a43cc);
+        
+    
+            var div_icon_54fec06550e1ba75609045f4de6c39ba = L.divIcon({
+  "html": "\u003cdiv style=\"font-size: 12px; color: black; margin-top: -10px; margin-left: -5px; text-align: center;\"\u003e\u003cb\u003e975 jt\u003c/b\u003e\u003c/div\u003e",
+  "className": "empty",
+});
+            marker_b484dccf5a34d62188296e573224d1be.setIcon(div_icon_54fec06550e1ba75609045f4de6c39ba);
+        
+    
+        var popup_fb4c2a7a67d5ece05f2df429baf2de93 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2a3df10b1d8d00275f0f7c72111865f9 = $(`<div id="html_2a3df10b1d8d00275f0f7c72111865f9" style="width: 100.0%; height: 100.0%;">Parongpong : 975 jt, LT:40.00, LB:40.00</div>`)[0];
+                popup_fb4c2a7a67d5ece05f2df429baf2de93.setContent(html_2a3df10b1d8d00275f0f7c72111865f9);
+            
+        
+
+        marker_b484dccf5a34d62188296e573224d1be.bindPopup(popup_fb4c2a7a67d5ece05f2df429baf2de93)
+        ;
+
+        
+    
+    
+    var color_map_59d7e299a754e30a54eb6da023bd8165 = {};
+
+    
+    color_map_59d7e299a754e30a54eb6da023bd8165.color = d3.scale.threshold()
+              .domain([0.0, 12855711.422845691, 25711422.845691383, 38567134.268537074, 51422845.691382766, 64278557.11422846, 77134268.53707415, 89989979.95991984, 102845691.38276553, 115701402.80561122, 128557114.22845691, 141412825.6513026, 154268537.0741483, 167124248.496994, 179979959.91983968, 192835671.34268537, 205691382.76553106, 218547094.18837675, 231402805.61122245, 244258517.03406814, 257114228.45691383, 269969939.8797595, 282825651.3026052, 295681362.7254509, 308537074.1482966, 321392785.57114226, 334248496.993988, 347104208.41683364, 359959919.83967936, 372815631.262525, 385671342.68537074, 398527054.1082164, 411382765.5310621, 424238476.9539078, 437094188.3767535, 449949899.7995992, 462805611.2224449, 475661322.64529055, 488517034.0681363, 501372745.49098194, 514228456.91382766, 527084168.3366733, 539939879.759519, 552795591.1823647, 565651302.6052104, 578507014.0280561, 591362725.4509017, 604218436.8737475, 617074148.2965932, 629929859.7194389, 642785571.1422845, 655641282.5651302, 668496993.987976, 681352705.4108217, 694208416.8336673, 707064128.256513, 719919839.6793587, 732775551.1022044, 745631262.52505, 758486973.9478958, 771342685.3707415, 784198396.7935872, 797054108.2164328, 809909819.6392785, 822765531.0621243, 835621242.48497, 848476953.9078156, 861332665.3306613, 874188376.753507, 887044088.1763527, 899899799.5991983, 912755511.0220441, 925611222.4448898, 938466933.8677355, 951322645.2905811, 964178356.7134268, 977034068.1362725, 989889779.5591183, 1002745490.9819639, 1015601202.4048096, 1028456913.8276553, 1041312625.250501, 1054168336.6733466, 1067024048.0961924, 1079879759.519038, 1092735470.9418838, 1105591182.3647294, 1118446893.7875752, 1131302605.2104208, 1144158316.6332664, 1157014028.0561123, 1169869739.478958, 1182725450.9018035, 1195581162.3246493, 1208436873.747495, 1221292585.1703408, 1234148296.5931864, 1247004008.016032, 1259859719.4388778, 1272715430.8617234, 1285571142.284569, 1298426853.7074149, 1311282565.1302605, 1324138276.5531063, 1336993987.975952, 1349849699.3987975, 1362705410.8216434, 1375561122.244489, 1388416833.6673346, 1401272545.0901804, 1414128256.513026, 1426983967.9358718, 1439839679.3587174, 1452695390.781563, 1465551102.204409, 1478406813.6272545, 1491262525.0501, 1504118236.472946, 1516973947.8957915, 1529829659.3186374, 1542685370.741483, 1555541082.1643286, 1568396793.5871744, 1581252505.01002, 1594108216.4328656, 1606963927.8557115, 1619819639.278557, 1632675350.701403, 1645531062.1242485, 1658386773.547094, 1671242484.96994, 1684098196.3927855, 1696953907.8156312, 1709809619.238477, 1722665330.6613226, 1735521042.0841684, 1748376753.507014, 1761232464.9298596, 1774088176.3527055, 1786943887.775551, 1799799599.1983967, 1812655310.6212425, 1825511022.0440881, 1838366733.466934, 1851222444.8897796, 1864078156.3126252, 1876933867.735471, 1889789579.1583166, 1902645290.5811622, 1915501002.004008, 1928356713.4268537, 1941212424.8496995, 1954068136.272545, 1966923847.6953907, 1979779559.1182365, 1992635270.5410821, 2005490981.9639277, 2018346693.3867736, 2031202404.8096192, 2044058116.232465, 2056913827.6553106, 2069769539.0781562, 2082625250.501002, 2095480961.9238477, 2108336673.3466933, 2121192384.769539, 2134048096.1923847, 2146903807.6152306, 2159759519.038076, 2172615230.460922, 2185470941.8837676, 2198326653.3066134, 2211182364.729459, 2224038076.1523046, 2236893787.5751505, 2249749498.997996, 2262605210.4208417, 2275460921.8436875, 2288316633.266533, 2301172344.6893787, 2314028056.1122246, 2326883767.53507, 2339739478.957916, 2352595190.3807616, 2365450901.803607, 2378306613.226453, 2391162324.6492987, 2404018036.0721445, 2416873747.49499, 2429729458.9178357, 2442585170.3406816, 2455440881.763527, 2468296593.1863728, 2481152304.6092186, 2494008016.032064, 2506863727.45491, 2519719438.8777556, 2532575150.300601, 2545430861.723447, 2558286573.1462927, 2571142284.569138, 2583997995.991984, 2596853707.4148297, 2609709418.8376756, 2622565130.260521, 2635420841.683367, 2648276553.1062126, 2661132264.529058, 2673987975.951904, 2686843687.3747497, 2699699398.797595, 2712555110.220441, 2725410821.6432867, 2738266533.066132, 2751122244.488978, 2763977955.9118237, 2776833667.334669, 2789689378.757515, 2802545090.180361, 2815400801.6032066, 2828256513.026052, 2841112224.448898, 2853967935.8717437, 2866823647.294589, 2879679358.717435, 2892535070.1402807, 2905390781.563126, 2918246492.985972, 2931102204.408818, 2943957915.831663, 2956813627.254509, 2969669338.677355, 2982525050.1002, 2995380761.523046, 3008236472.945892, 3021092184.3687377, 3033947895.791583, 3046803607.214429, 3059659318.6372747, 3072515030.06012, 3085370741.482966, 3098226452.905812, 3111082164.328657, 3123937875.751503, 3136793587.174349, 3149649298.597194, 3162505010.02004, 3175360721.442886, 3188216432.8657312, 3201072144.288577, 3213927855.711423, 3226783567.1342688, 3239639278.557114, 3252494989.97996, 3265350701.402806, 3278206412.825651, 3291062124.248497, 3303917835.671343, 3316773547.094188, 3329629258.517034, 3342484969.93988, 3355340681.3627253, 3368196392.785571, 3381052104.208417, 3393907815.6312623, 3406763527.054108, 3419619238.476954, 3432474949.8998, 3445330661.322645, 3458186372.745491, 3471042084.168337, 3483897795.591182, 3496753507.014028, 3509609218.436874, 3522464929.8597193, 3535320641.282565, 3548176352.705411, 3561032064.1282563, 3573887775.551102, 3586743486.973948, 3599599198.3967934, 3612454909.819639, 3625310621.242485, 3638166332.665331, 3651022044.0881763, 3663877755.511022, 3676733466.933868, 3689589178.3567133, 3702444889.779559, 3715300601.202405, 3728156312.6252503, 3741012024.048096, 3753867735.470942, 3766723446.8937874, 3779579158.316633, 3792434869.739479, 3805290581.1623244, 3818146292.5851703, 3831002004.008016, 3843857715.430862, 3856713426.8537073, 3869569138.276553, 3882424849.699399, 3895280561.1222444, 3908136272.54509, 3920991983.967936, 3933847695.3907814, 3946703406.8136272, 3959559118.236473, 3972414829.6593184, 3985270541.0821643, 3998126252.50501, 4010981963.9278555, 4023837675.3507013, 4036693386.773547, 4049549098.196393, 4062404809.6192384, 4075260521.042084, 4088116232.46493, 4100971943.8877754, 4113827655.3106213, 4126683366.733467, 4139539078.1563125, 4152394789.5791583, 4165250501.002004, 4178106212.4248495, 4190961923.8476954, 4203817635.270541, 4216673346.6933866, 4229529058.1162324, 4242384769.539078, 4255240480.961924, 4268096192.3847694, 4280951903.8076153, 4293807615.230461, 4306663326.653307, 4319519038.076152, 4332374749.498998, 4345230460.921844, 4358086172.344689, 4370941883.767535, 4383797595.190381, 4396653306.613227, 4409509018.036072, 4422364729.458918, 4435220440.881763, 4448076152.304609, 4460931863.727455, 4473787575.150301, 4486643286.573146, 4499498997.995992, 4512354709.418838, 4525210420.841683, 4538066132.264529, 4550921843.687375, 4563777555.110221, 4576633266.533066, 4589488977.955912, 4602344689.378757, 4615200400.801603, 4628056112.224449, 4640911823.647295, 4653767535.07014, 4666623246.492986, 4679478957.915832, 4692334669.338677, 4705190380.761523, 4718046092.184369, 4730901803.607214, 4743757515.03006, 4756613226.452906, 4769468937.8757515, 4782324649.298597, 4795180360.721443, 4808036072.144289, 4820891783.567134, 4833747494.98998, 4846603206.412826, 4859458917.835671, 4872314629.258517, 4885170340.681363, 4898026052.104208, 4910881763.527054, 4923737474.9499, 4936593186.3727455, 4949448897.795591, 4962304609.218437, 4975160320.641283, 4988016032.064128, 5000871743.486974, 5013727454.90982, 5026583166.332665, 5039438877.755511, 5052294589.178357, 5065150300.601202, 5078006012.024048, 5090861723.446894, 5103717434.86974, 5116573146.292585, 5129428857.715431, 5142284569.138276, 5155140280.561122, 5167995991.983968, 5180851703.406814, 5193707414.829659, 5206563126.252505, 5219418837.675351, 5232274549.098196, 5245130260.521042, 5257985971.943888, 5270841683.366734, 5283697394.789579, 5296553106.212425, 5309408817.63527, 5322264529.058116, 5335120240.480962, 5347975951.903808, 5360831663.3266535, 5373687374.749499, 5386543086.172345, 5399398797.59519, 5412254509.018036, 5425110220.440882, 5437965931.863728, 5450821643.286573, 5463677354.709419, 5476533066.132264, 5489388777.55511, 5502244488.977956, 5515100200.400802, 5527955911.8236475, 5540811623.246493, 5553667334.669338, 5566523046.092184, 5579378757.51503, 5592234468.937876, 5605090180.360722, 5617945891.783567, 5630801603.206413, 5643657314.629258, 5656513026.052104, 5669368737.47495, 5682224448.897796, 5695080160.3206415, 5707935871.743487, 5720791583.166332, 5733647294.589178, 5746503006.012024, 5759358717.43487, 5772214428.857716, 5785070140.280561, 5797925851.703407, 5810781563.126252, 5823637274.549098, 5836492985.971944, 5849348697.39479, 5862204408.817636, 5875060120.240481, 5887915831.663326, 5900771543.086172, 5913627254.509018, 5926482965.931864, 5939338677.35471, 5952194388.777555, 5965050100.2004, 5977905811.623246, 5990761523.046092, 6003617234.468938, 6016472945.891784, 6029328657.31463, 6042184368.737475, 6055040080.16032, 6067895791.583166, 6080751503.006012, 6093607214.428858, 6106462925.851704, 6119318637.2745495, 6132174348.697394, 6145030060.12024, 6157885771.543086, 6170741482.965932, 6183597194.388778, 6196452905.811624, 6209308617.234469, 6222164328.657314, 6235020040.08016, 6247875751.503006, 6260731462.925852, 6273587174.348698, 6286442885.7715435, 6299298597.194388, 6312154308.617234, 6325010020.04008, 6337865731.462926, 6350721442.885772, 6363577154.308618, 6376432865.7314625, 6389288577.154308, 6402144288.577154, 6415000000.0])
+              .range(['#00ffffff', '#00ffffff', '#00fefeff', '#00fefeff', '#00fdfdff', '#00fdfdff', '#00fcfcff', '#00fcfcff', '#00fbfbff', '#00fbfbff', '#00fafaff', '#00fafaff', '#00f9f9ff', '#00f9f9ff', '#00f8f8ff', '#00f8f8ff', '#00f7f7ff', '#00f7f7ff', '#00f6f6ff', '#00f6f6ff', '#00f5f5ff', '#00f5f5ff', '#00f4f4ff', '#00f4f4ff', '#00f3f3ff', '#00f3f3ff', '#00f2f2ff', '#00f2f2ff', '#00f1f1ff', '#00f1f1ff', '#00f0f0ff', '#00f0f0ff', '#00efefff', '#00efefff', '#00eeeeff', '#00eeeeff', '#00ededff', '#00ededff', '#00ececff', '#00ebebff', '#00ebebff', '#00eaeaff', '#00eaeaff', '#00e9e9ff', '#00e9e9ff', '#00e8e8ff', '#00e8e8ff', '#00e7e7ff', '#00e7e7ff', '#00e6e6ff', '#00e6e6ff', '#00e5e5ff', '#00e5e5ff', '#00e4e4ff', '#00e4e4ff', '#00e3e3ff', '#00e3e3ff', '#00e2e2ff', '#00e2e2ff', '#00e1e1ff', '#00e1e1ff', '#00e0e0ff', '#00e0e0ff', '#00dfdfff', '#00dfdfff', '#00dedeff', '#00dedeff', '#00ddddff', '#00ddddff', '#00dcdcff', '#00dcdcff', '#00dbdbff', '#00dbdbff', '#00dadaff', '#00dadaff', '#00d9d9ff', '#00d9d9ff', '#00d8d8ff', '#00d7d7ff', '#00d7d7ff', '#00d6d6ff', '#00d6d6ff', '#00d5d5ff', '#00d5d5ff', '#00d4d4ff', '#00d4d4ff', '#00d3d3ff', '#00d3d3ff', '#00d2d2ff', '#00d2d2ff', '#00d1d1ff', '#00d1d1ff', '#00d0d0ff', '#00d0d0ff', '#00cfcfff', '#00cfcfff', '#00ceceff', '#00ceceff', '#00cdcdff', '#00cdcdff', '#00ccccff', '#00ccccff', '#00cbcbff', '#00cbcbff', '#00cacaff', '#00cacaff', '#00c9c9ff', '#00c9c9ff', '#00c8c8ff', '#00c8c8ff', '#00c7c7ff', '#00c7c7ff', '#00c6c6ff', '#00c6c6ff', '#00c5c5ff', '#00c5c5ff', '#00c4c4ff', '#00c3c3ff', '#00c3c3ff', '#00c2c2ff', '#00c2c2ff', '#00c1c1ff', '#00c1c1ff', '#00c0c0ff', '#00c0c0ff', '#00bfbfff', '#00bfbfff', '#00bebeff', '#00bebeff', '#00bdbdff', '#00bdbdff', '#00bcbcff', '#00bcbcff', '#00bbbbff', '#00bbbbff', '#00babaff', '#00babaff', '#00b9b9ff', '#00b9b9ff', '#00b8b8ff', '#00b8b8ff', '#00b7b7ff', '#00b7b7ff', '#00b6b6ff', '#00b6b6ff', '#00b5b5ff', '#00b5b5ff', '#00b4b4ff', '#00b4b4ff', '#00b3b3ff', '#00b3b3ff', '#00b2b2ff', '#00b2b2ff', '#00b1b1ff', '#00b0b0ff', '#00b0b0ff', '#00afafff', '#00afafff', '#00aeaeff', '#00aeaeff', '#00adadff', '#00adadff', '#00acacff', '#00acacff', '#00ababff', '#00ababff', '#00aaaaff', '#00aaaaff', '#00a9a9ff', '#00a9a9ff', '#00a8a8ff', '#00a8a8ff', '#00a7a7ff', '#00a7a7ff', '#00a6a6ff', '#00a6a6ff', '#00a5a5ff', '#00a5a5ff', '#00a4a4ff', '#00a4a4ff', '#00a3a3ff', '#00a3a3ff', '#00a2a2ff', '#00a2a2ff', '#00a1a1ff', '#00a1a1ff', '#00a0a0ff', '#00a0a0ff', '#009f9fff', '#009f9fff', '#009e9eff', '#009e9eff', '#009d9dff', '#009c9cff', '#009c9cff', '#009b9bff', '#009b9bff', '#009a9aff', '#009a9aff', '#009999ff', '#009999ff', '#009898ff', '#009898ff', '#009797ff', '#009797ff', '#009696ff', '#009696ff', '#009595ff', '#009595ff', '#009494ff', '#009494ff', '#009393ff', '#009393ff', '#009292ff', '#009292ff', '#009191ff', '#009191ff', '#009090ff', '#009090ff', '#008f8fff', '#008f8fff', '#008e8eff', '#008e8eff', '#008d8dff', '#008d8dff', '#008c8cff', '#008c8cff', '#008b8bff', '#008b8bff', '#008a8aff', '#008a8aff', '#008989ff', '#008888ff', '#008888ff', '#008787ff', '#008787ff', '#008686ff', '#008686ff', '#008585ff', '#008585ff', '#008484ff', '#008484ff', '#008383ff', '#008383ff', '#008282ff', '#008282ff', '#008181ff', '#008181ff', '#008080ff', '#008080ff', '#007f7fff', '#007f7fff', '#007e7eff', '#007e7eff', '#007d7dff', '#007d7dff', '#007c7cff', '#007c7cff', '#007b7bff', '#007b7bff', '#007a7aff', '#007a7aff', '#007979ff', '#007979ff', '#007878ff', '#007878ff', '#007777ff', '#007777ff', '#007676ff', '#007575ff', '#007575ff', '#007474ff', '#007474ff', '#007373ff', '#007373ff', '#007272ff', '#007272ff', '#007171ff', '#007171ff', '#007070ff', '#007070ff', '#006f6fff', '#006f6fff', '#006e6eff', '#006e6eff', '#006d6dff', '#006d6dff', '#006c6cff', '#006c6cff', '#006b6bff', '#006b6bff', '#006a6aff', '#006a6aff', '#006969ff', '#006969ff', '#006868ff', '#006868ff', '#006767ff', '#006767ff', '#006666ff', '#006666ff', '#006565ff', '#006565ff', '#006464ff', '#006464ff', '#006363ff', '#006363ff', '#006262ff', '#006161ff', '#006161ff', '#006060ff', '#006060ff', '#005f5fff', '#005f5fff', '#005e5eff', '#005e5eff', '#005d5dff', '#005d5dff', '#005c5cff', '#005c5cff', '#005b5bff', '#005b5bff', '#005a5aff', '#005a5aff', '#005959ff', '#005959ff', '#005858ff', '#005858ff', '#005757ff', '#005757ff', '#005656ff', '#005656ff', '#005555ff', '#005555ff', '#005454ff', '#005454ff', '#005353ff', '#005353ff', '#005252ff', '#005252ff', '#005151ff', '#005151ff', '#005050ff', '#005050ff', '#004f4fff', '#004f4fff', '#004e4eff', '#004d4dff', '#004d4dff', '#004c4cff', '#004c4cff', '#004b4bff', '#004b4bff', '#004a4aff', '#004a4aff', '#004949ff', '#004949ff', '#004848ff', '#004848ff', '#004747ff', '#004747ff', '#004646ff', '#004646ff', '#004545ff', '#004545ff', '#004444ff', '#004444ff', '#004343ff', '#004343ff', '#004242ff', '#004242ff', '#004141ff', '#004141ff', '#004040ff', '#004040ff', '#003f3fff', '#003f3fff', '#003e3eff', '#003e3eff', '#003d3dff', '#003d3dff', '#003c3cff', '#003c3cff', '#003b3bff', '#003a3aff', '#003a3aff', '#003939ff', '#003939ff', '#003838ff', '#003838ff', '#003737ff', '#003737ff', '#003636ff', '#003636ff', '#003535ff', '#003535ff', '#003434ff', '#003434ff', '#003333ff', '#003333ff', '#003232ff', '#003232ff', '#003131ff', '#003131ff', '#003030ff', '#003030ff', '#002f2fff', '#002f2fff', '#002e2eff', '#002e2eff', '#002d2dff', '#002d2dff', '#002c2cff', '#002c2cff', '#002b2bff', '#002b2bff', '#002a2aff', '#002a2aff', '#002929ff', '#002929ff', '#002828ff', '#002828ff', '#002727ff', '#002626ff', '#002626ff', '#002525ff', '#002525ff', '#002424ff', '#002424ff', '#002323ff', '#002323ff', '#002222ff', '#002222ff', '#002121ff', '#002121ff', '#002020ff', '#002020ff', '#001f1fff', '#001f1fff', '#001e1eff', '#001e1eff', '#001d1dff', '#001d1dff', '#001c1cff', '#001c1cff', '#001b1bff', '#001b1bff', '#001a1aff', '#001a1aff', '#001919ff', '#001919ff', '#001818ff', '#001818ff', '#001717ff', '#001717ff', '#001616ff', '#001616ff', '#001515ff', '#001515ff', '#001414ff', '#001414ff', '#001313ff', '#001212ff', '#001212ff', '#001111ff', '#001111ff', '#001010ff', '#001010ff', '#000f0fff', '#000f0fff', '#000e0eff', '#000e0eff', '#000d0dff', '#000d0dff', '#000c0cff', '#000c0cff', '#000b0bff', '#000b0bff', '#000a0aff', '#000a0aff', '#000909ff', '#000909ff', '#000808ff', '#000808ff', '#000707ff', '#000707ff', '#000606ff', '#000606ff', '#000505ff', '#000505ff', '#000404ff', '#000404ff', '#000303ff', '#000303ff', '#000202ff', '#000202ff', '#000101ff', '#000101ff', '#000000ff', '#000000ff']);
+    
+
+    color_map_59d7e299a754e30a54eb6da023bd8165.x = d3.scale.linear()
+              .domain([0.0, 6415000000.0])
+              .range([0, 450 - 50]);
+
+    color_map_59d7e299a754e30a54eb6da023bd8165.legend = L.control({position: 'topright'});
+    color_map_59d7e299a754e30a54eb6da023bd8165.legend.onAdd = function (map) {var div = L.DomUtil.create('div', 'legend'); return div};
+    color_map_59d7e299a754e30a54eb6da023bd8165.legend.addTo(map_9901e8d182030d96fb046a0a889a43cc);
+
+    color_map_59d7e299a754e30a54eb6da023bd8165.xAxis = d3.svg.axis()
+        .scale(color_map_59d7e299a754e30a54eb6da023bd8165.x)
+        .orient("top")
+        .tickSize(1)
+        .tickValues([0.0, 1283000000.0, 2566000000.0, 3849000000.0, 5132000000.0, 6415000000.0]);
+
+    color_map_59d7e299a754e30a54eb6da023bd8165.svg = d3.select(".legend.leaflet-control").append("svg")
+        .attr("id", 'legend')
+        .attr("width", 450)
+        .attr("height", 40);
+
+    color_map_59d7e299a754e30a54eb6da023bd8165.g = color_map_59d7e299a754e30a54eb6da023bd8165.svg.append("g")
+        .attr("class", "key")
+        .attr("fill", "black")
+        .attr("transform", "translate(25,16)");
+
+    color_map_59d7e299a754e30a54eb6da023bd8165.g.selectAll("rect")
+        .data(color_map_59d7e299a754e30a54eb6da023bd8165.color.range().map(function(d, i) {
+          return {
+            x0: i ? color_map_59d7e299a754e30a54eb6da023bd8165.x(color_map_59d7e299a754e30a54eb6da023bd8165.color.domain()[i - 1]) : color_map_59d7e299a754e30a54eb6da023bd8165.x.range()[0],
+            x1: i < color_map_59d7e299a754e30a54eb6da023bd8165.color.domain().length ? color_map_59d7e299a754e30a54eb6da023bd8165.x(color_map_59d7e299a754e30a54eb6da023bd8165.color.domain()[i]) : color_map_59d7e299a754e30a54eb6da023bd8165.x.range()[1],
+            z: d
+          };
+        }))
+      .enter().append("rect")
+        .attr("height", 40 - 30)
+        .attr("x", function(d) { return d.x0; })
+        .attr("width", function(d) { return d.x1 - d.x0; })
+        .style("fill", function(d) { return d.z; });
+
+    color_map_59d7e299a754e30a54eb6da023bd8165.g.call(color_map_59d7e299a754e30a54eb6da023bd8165.xAxis).append("text")
+        .attr("class", "caption")
+        .attr("y", 21)
+        .attr("fill", "black")
+        .text("Harga Properti (Inverted)");
+</script>
+</html>
